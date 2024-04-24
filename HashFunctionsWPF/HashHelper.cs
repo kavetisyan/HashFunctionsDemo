@@ -37,5 +37,32 @@ namespace HashFunctionsWPF
                 return BitConverter.ToString(hashedBytes).Replace("-", "");
             }
         }
+
+        public static string HashWithKeyExtension(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] data = Encoding.UTF8.GetBytes(input);
+
+                int sum = 0;
+                foreach (char c in input)
+                {
+                    sum += (int)c;
+                    if (sum % 2 == 0)
+                    {
+                        data = sha256.ComputeHash(data);
+                    }
+                    else
+                    {
+                        data = md5.ComputeHash(data);
+                    }
+                }
+
+                data = sha256.ComputeHash(data);
+
+                return BitConverter.ToString(data).Replace("-", "");
+            }
+        }
     }
 }
