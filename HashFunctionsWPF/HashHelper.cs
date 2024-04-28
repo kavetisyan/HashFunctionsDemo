@@ -38,13 +38,14 @@ namespace HashFunctionsWPF
             }
         }
 
-        public static string HashWithKeyExtension(string input)
+        public static KeyExtensionResultModel HashWithKeyExtension(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
             using (MD5 md5 = MD5.Create())
             {
                 byte[] data = Encoding.UTF8.GetBytes(input);
-
+                int sha256Count = 0;
+                int md5Count = 0;
                 int sum = 0;
                 foreach (char c in input)
                 {
@@ -52,16 +53,24 @@ namespace HashFunctionsWPF
                     if (sum % 2 == 0)
                     {
                         data = sha256.ComputeHash(data);
+                        sha256Count++;
                     }
                     else
                     {
                         data = md5.ComputeHash(data);
+                        md5Count++;
                     }
                 }
 
                 data = sha256.ComputeHash(data);
+                sha256Count++;
 
-                return BitConverter.ToString(data).Replace("-", "");
+                return new KeyExtensionResultModel()
+                {
+                    Hash = BitConverter.ToString(data).Replace("-", ""),
+                    MD5Count = md5Count,
+                    SHA256Count = sha256Count
+                };
             }
         }
     }

@@ -24,10 +24,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
-           
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <RadioButton x:Name="rBtnCollisionC" Content="Collision Attack" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
                 <RadioButton x:Name="rBtnSaltC" Content="Salting Demo" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="rBtnExtC" Content="Key Extension Demo" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
             </StackPanel>
             
             <Label Content="Input Data:" Grid.Row="1" Grid.Column="0" Margin="10"/>
@@ -71,9 +72,10 @@
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <RadioButton x:Name="rBtnCollisionS" Content="Collision Attack" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
                 <RadioButton x:Name="rBtnSaltS" Content="Salting Demo" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="rBtnExtS" Content="Key Extension Demo" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
             </StackPanel>
 
             <Label Content="Input Data:" Grid.Row="1" Grid.Column="0" Margin="10"/>
@@ -94,6 +96,46 @@
 
             <TextBlock TextWrapping="Wrap" Text="Note: This demo uses SHA-256 hash function." Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="10"/>
             <Button x:Name="clrSalt" Content="Clear" Grid.Row="6" Grid.Column="3" Click="ClearSalt_Click" Margin="10"/>
+        </Grid>
+        <Grid x:Name="ExtensionGrid" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton x:Name="rBtnCollisionE" Content="Collision Attack" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="rBtnSaltE" Content="Salting Demo" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="rBtnExtE" Content="Key Extension Demo" FontSize="14" Margin="10" Checked="RadioButton_Checked"/>
+            </StackPanel>
+
+            <Label Content="Input Data:" Grid.Row="1" Grid.Column="0" Margin="10"/>
+            <TextBox x:Name="txtInputExt" Grid.Row="1" Margin="10" Grid.Column="1"/>
+            <Button Content="Calculate Hash" Grid.Row="1" Grid.Column="2" Click="CalculateExtHash_Click" Margin="10"/>
+
+            <Label Content="Hash Result:" Grid.Row="2" Grid.Column="0" Margin="10"/>
+            <TextBox x:Name="txtHashExt" Grid.Row="2" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" Margin="10"/>
+
+            <Label Content="MD5 Count:" Grid.Row="3" Grid.Column="0" Margin="10"/>
+            <TextBox x:Name="txtMd5CountExt" Grid.Row="3" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" Margin="10"/>
+
+            <Label Content="SHA256 Count:" Grid.Row="4" Grid.Column="0" Margin="10"/>
+            <TextBox x:Name="txtSha256CountExt" Grid.Row="4" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" Margin="10"/>
+
+            <TextBlock TextWrapping="Wrap" Text="Note: This demo uses SHA-256, MD5 hash functions." Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="10"/>
+            <Button x:Name="clrExt" Content="Clear" Grid.Row="6" Grid.Column="3" Click="ClearExt_Click" Margin="10"/>
         </Grid>
     </Grid>
 </Window>

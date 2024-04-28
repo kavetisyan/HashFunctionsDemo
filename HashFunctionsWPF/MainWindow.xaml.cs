@@ -88,7 +88,6 @@ namespace HashFunctionsWPF
         }
         #endregion "Properties"
 
-
         #region "Events"
         private async void CalculateHash_Click(object sender, RoutedEventArgs e)
         {
@@ -104,7 +103,6 @@ namespace HashFunctionsWPF
                 MessageBox.Show("Please enter some input data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private async void Attack_Click(object sender, RoutedEventArgs e)
         {
             string originalInput = txtInput.Text;
@@ -140,16 +138,23 @@ namespace HashFunctionsWPF
                 if (a.Content.ToString() == "Collision Attack")
                 {
                     rBtnCollisionC.IsChecked = true;
-                    rBtnCollisionS.IsChecked = true;
                     CollusionGrid.Visibility = Visibility.Visible;
                     SaltGrid.Visibility = Visibility.Collapsed;
+                    ExtensionGrid.Visibility = Visibility.Collapsed;
                 }
-                else
+                else if (a.Content.ToString() == "Salting Demo")
                 {
-                    rBtnSaltC.IsChecked = true;
                     rBtnSaltS.IsChecked = true;
                     CollusionGrid.Visibility = Visibility.Collapsed;
                     SaltGrid.Visibility = Visibility.Visible;
+                    ExtensionGrid.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    rBtnExtE.IsChecked = true;
+                    CollusionGrid.Visibility = Visibility.Collapsed;
+                    SaltGrid.Visibility = Visibility.Collapsed;
+                    ExtensionGrid.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -174,15 +179,36 @@ namespace HashFunctionsWPF
                 MessageBox.Show("Please enter some input data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void CalculateExtHash_Click(object sender, RoutedEventArgs e)
+        {
+            string input = txtInputExt.Text;
+            if (!string.IsNullOrEmpty(input))
+            {
+                var result = HashHelper.HashWithKeyExtension(input);
+                if(result != null)
+                {
 
+                    txtHashExt.Text = result.Hash;
+                    txtMd5CountExt.Text = result.MD5Count.ToString();
+                    txtSha256CountExt.Text = result.SHA256Count.ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter some input data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void ClearCollusion_Click(object sender, RoutedEventArgs e)
         {
             ClearGrid(CollusionGrid);
         }
-
         private void ClearSalt_Click(object sender, RoutedEventArgs e)
         {
             ClearGrid(SaltGrid);
+        }
+        private void ClearExt_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(ExtensionGrid);
         }
         #endregion "Events"
 
@@ -203,13 +229,11 @@ namespace HashFunctionsWPF
             }
             return attackedInput;
         }
-
         private void SwitchBusyIndicator()
         {
             BusyOverlay.Visibility = CollusionGrid.Visibility;
             CollusionGrid.Visibility = CollusionGrid.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
-
         private void ClearGrid(Grid grid)
         {
             foreach (var child in grid.Children)
